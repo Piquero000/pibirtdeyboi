@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎂 Happy Birthday!</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&amp;family=Quicksand:wght@400;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100%) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(800%) rotate(720deg); opacity: 0; }
+        }
+        @keyframes scale-in {
+            0% { transform: scale(0); opacity: 0; }
+            60% { transform: scale(1.2); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes slide-up {
+            0% { transform: translateY(40px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes pulse-glow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.3); }
+        }
+        .animate-float { animation: float 3s ease-in-out infinite; }
+        .animate-scale-in { animation: scale-in 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+        .animate-slide-up { animation: slide-up 0.6s ease-out forwards; }
+        .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+        .confetti-piece {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            top: -10px;
+            animation: confetti-fall linear forwards;
+        }
+        .hidden-surprise { display: none; }
+        .cake-emoji { font-size: 80px; }
+    </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full">
+  <div id="app" class="h-full w-full overflow-auto" style="background: linear-gradient(135deg, #1a0533 0%, #2d1b69 40%, #0f3460 100%);">
+   <!-- Landing Screen -->
+   <div id="landing" class="h-full flex flex-col items-center justify-center px-6 text-center">
+    <div class="animate-float mb-6">
+     <span class="text-7xl">🎁</span>
+    </div>
+    <h1 class="text-white text-2xl md:text-3xl font-semibold mb-4" style="font-family: 'Quicksand', sans-serif;">May surprise para sa'yo!</h1>
+    <p class="text-purple-200 text-lg mb-8" style="font-family: 'Quicksand', sans-serif;">Click the gift to open ✨</p><button id="open-btn" onclick="revealSurprise()" class="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white text-xl font-bold py-4 px-10 rounded-full shadow-lg shadow-purple-900/50 transition-all duration-300 hover:scale-110 active:scale-95" style="font-family: 'Quicksand', sans-serif;"> 🎁 Open Mo Na! </button>
+   </div><!-- Surprise Screen -->
+   <div id="surprise" class="hidden-surprise h-full flex flex-col items-center justify-center px-6 text-center relative">
+    <div class="animate-scale-in mb-4">
+     <span class="cake-emoji">🎂</span>
+    </div>
+    <h1 id="greeting-text" class="text-5xl md:text-7xl text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-pink-400 to-purple-400 mb-4 animate-pulse-glow" style="font-family: 'Pacifico', cursive; animation-delay: 0.3s; opacity: 0; animation: scale-in 0.8s 0.3s cubic-bezier(0.34,1.56,0.64,1) forwards;">Happy Birthday!</h1>
+    <h2 id="name-text" class="text-3xl md:text-5xl text-white font-bold mb-6" style="font-family: 'Pacifico', cursive; opacity: 0; animation: slide-up 0.6s 0.8s ease-out forwards;">Friend</h2>
+    <p id="message-text" class="text-purple-200 text-lg md:text-xl max-w-md leading-relaxed" style="font-family: 'Quicksand', sans-serif; opacity: 0; animation: slide-up 0.6s 1.2s ease-out forwards;">Maligayang kaarawan! Sana masaya ka today at palagi. 🥳🎉</p>
+    <div class="mt-8 flex gap-4 text-4xl" style="opacity: 0; animation: slide-up 0.6s 1.6s ease-out forwards;">
+     <span class="animate-float" style="animation-delay: 0s;">🎈</span> <span class="animate-float" style="animation-delay: 0.3s;">🎊</span> <span class="animate-float" style="animation-delay: 0.6s;">🎉</span> <span class="animate-float" style="animation-delay: 0.9s;">🥳</span> <span class="animate-float" style="animation-delay: 1.2s;">🎈</span>
+    </div>
+    <div class="mt-12 w-full max-w-2xl p-6 bg-white/10 backdrop-blur rounded-2xl border border-white/20" style="opacity: 0; animation: slide-up 0.6s 2s ease-out forwards;">
+     <h3 class="text-white text-2xl font-bold mb-4" style="font-family: 'Quicksand', sans-serif;">💌 A Special Message</h3>
+     <p id="letter-text" class="text-purple-100 text-base leading-relaxed text-left whitespace-pre-wrap" style="font-family: 'Quicksand', sans-serif; min-height: 120px;">Thank you for being such an amazing friend. You bring so much joy and laughter to my life. Happy birthday, and I hope this year brings you all the happiness you deserve! 💕</p>
+    </div><button id="restart-btn" onclick="restartSurprise()" class="mt-8 bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 text-white font-bold py-3 px-8 rounded-full shadow-lg shadow-orange-900/50 transition-all duration-300 hover:scale-105 active:scale-95" style="font-family: 'Quicksand', sans-serif; opacity: 0; animation: slide-up 0.6s 2.4s ease-out forwards;">🔄 Again!</button>
+   </div>
+  </div>
+  <script>
+        const defaultConfig = {
+            birthday_name: "May laput",
+            birthday_message: "Maligayang kaarawan! Sana masaya ka today at palagi. 🥳🎉",
+            appreciation_letter: "Thank you for being such an amazing friend. You bring so much joy and laughter to my life. Happy birthday, and I hope this year brings you all the happiness you deserve! 💕",
+            primary_color: "#1a0533",
+            text_color: "#ffffff",
+            accent_color: "#ec4899",
+            font_family: "Pacifico"
+        };
+
+        function revealSurprise() {
+            document.getElementById('landing').style.display = 'none';
+            document.getElementById('surprise').style.display = 'flex';
+            document.getElementById('surprise').classList.remove('hidden-surprise');
+            launchConfetti();
+            playBirthdaySound();
+            playBackgroundMusic();
+        }
+
+        function restartSurprise() {
+            document.getElementById('landing').style.display = 'flex';
+            document.getElementById('surprise').style.display = 'none';
+            document.getElementById('surprise').classList.add('hidden-surprise');
+            const confetti = document.querySelectorAll('.confetti-piece');
+            confetti.forEach(piece => piece.remove());
+        }
+
+        function launchConfetti() {
+            const colors = ['#ff6b6b','#feca57','#48dbfb','#ff9ff3','#54a0ff','#5f27cd','#01a3a4','#f368e0'];
+            for (let i = 0; i < 60; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece';
+                piece.style.left = Math.random() * 100 + '%';
+                piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                piece.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                piece.style.animationDelay = Math.random() * 2 + 's';
+                piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                piece.style.width = (Math.random() * 8 + 6) + 'px';
+                piece.style.height = (Math.random() * 8 + 6) + 'px';
+                document.body.appendChild(piece);
+                setTimeout(() => piece.remove(), 5000);
+            }
+        }
+
+        function playBirthdaySound() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const notes = [262,262,294,262,349,330, 262,262,294,262,392,349];
+                const durations = [0.3,0.3,0.6,0.6,0.6,1, 0.3,0.3,0.6,0.6,0.6,1];
+                let time = ctx.currentTime;
+                notes.forEach((freq, i) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.frequency.value = freq;
+                    osc.type = 'sine';
+                    gain.gain.setValueAtTime(0.15, time);
+                    gain.gain.exponentialRampToValueAtTime(0.01, time + durations[i] * 0.9);
+                    osc.start(time);
+                    osc.stop(time + durations[i]);
+                    time += durations[i];
+                });
+            } catch(e) {}
+        }
+
+        function playBackgroundMusic() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const gainNode = ctx.createGain();
+                gainNode.connect(ctx.destination);
+                gainNode.gain.setValueAtTime(0.1, ctx.currentTime);
+                
+                // "Lumilipas ang Panahon" inspired melody
+                const melody = [
+                    { freq: 262, duration: 0.4 },  // C
+                    { freq: 330, duration: 0.4 },  // E
+                    { freq: 392, duration: 0.4 },  // G
+                    { freq: 330, duration: 0.4 },  // E
+                    { freq: 262, duration: 0.4 },  // C
+                    { freq: 294, duration: 0.4 },  // D
+                    { freq: 330, duration: 0.4 },  // E
+                    { freq: 349, duration: 0.6 },  // F
+                    { freq: 330, duration: 0.2 },  // E
+                    { freq: 392, duration: 0.4 },  // G
+                    { freq: 440, duration: 0.4 },  // A
+                    { freq: 392, duration: 0.4 },  // G
+                    { freq: 349, duration: 0.4 },  // F
+                    { freq: 330, duration: 0.4 },  // E
+                    { freq: 294, duration: 0.4 },  // D
+                    { freq: 262, duration: 0.8 },  // C
+                ];
+
+                let time = ctx.currentTime + 1.5; // Start after birthday melody
+                
+                // Play melody twice
+                for (let repeat = 0; repeat < 2; repeat++) {
+                    melody.forEach(note => {
+                        const osc = ctx.createOscillator();
+                        const noteGain = ctx.createGain();
+                        osc.connect(noteGain);
+                        noteGain.connect(gainNode);
+                        osc.frequency.value = note.freq;
+                        osc.type = 'sine';
+                        noteGain.gain.setValueAtTime(0.12, time);
+                        noteGain.gain.exponentialRampToValueAtTime(0.01, time + note.duration * 0.9);
+                        osc.start(time);
+                        osc.stop(time + note.duration);
+                        time += note.duration;
+                    });
+                }
+            } catch(e) {}
+        }
+
+        function applyConfig(config) {
+            const name = config.birthday_name || defaultConfig.birthday_name;
+            const msg = config.birthday_message || defaultConfig.birthday_message;
+            const letter = config.appreciation_letter || defaultConfig.appreciation_letter;
+            document.getElementById('name-text').textContent = name;
+            document.getElementById('message-text').textContent = msg;
+            document.getElementById('letter-text').textContent = letter;
+            const font = config.font_family || defaultConfig.font_family;
+            document.getElementById('greeting-text').style.fontFamily = `${font}, cursive`;
+            document.getElementById('name-text').style.fontFamily = `${font}, cursive`;
+        }
+
+        window.elementSdk.init({
+            defaultConfig,
+            onConfigChange: async (config) => { applyConfig(config); },
+            mapToCapabilities: (config) => ({
+                recolorables: [
+                    { get: () => config.accent_color || defaultConfig.accent_color, set: (v) => { config.accent_color = v; window.elementSdk.setConfig({ accent_color: v }); } },
+                    { get: () => config.text_color || defaultConfig.text_color, set: (v) => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); } }
+                ],
+                borderables: [],
+                fontEditable: {
+                    get: () => config.font_family || defaultConfig.font_family,
+                    set: (v) => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
+                },
+                fontSizeable: undefined
+            }),
+            mapToEditPanelValues: (config) => new Map([
+                ["birthday_name", config.birthday_name || defaultConfig.birthday_name],
+                ["birthday_message", config.birthday_message || defaultConfig.birthday_message],
+                ["appreciation_letter", config.appreciation_letter || defaultConfig.appreciation_letter]
+            ])
+        });
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f7085983113dda0',t:'MTc3Nzk5MjI1Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
